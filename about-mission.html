@@ -236,6 +236,11 @@
       gap: 3rem;
       align-items: stretch;
     }
+    @media (max-width: 900px) {
+      .mega-inner {
+        padding: 0 20px 28px;
+      }
+    }
     .mega-columns {
       flex: 2;
       display: flex;
@@ -306,7 +311,7 @@
     }
     .preview-overlay p { font-size: 0.75rem; opacity: 0.8; }
 
-    /* HAMBURGER */
+    /* HAMBURGER BUTTON */
     .menu-toggle {
       display: none;
       background: none;
@@ -372,6 +377,7 @@
         background: linear-gradient(90deg, transparent, var(--accent), transparent);
       }
 
+      .nav-item--mobile-only { display: flex !important; flex-direction: column; }
       .nav-item {
         flex-direction: column;
         align-items: stretch;
@@ -451,7 +457,7 @@
         transform: translateX(6px);
       }
 
-      /* FULL IMAGE PREVIEW ON MOBILE - NO CROPPING */
+      /* FULL IMAGE PREVIEW ON MOBILE */
       .mega-preview {
         display: flex;
         flex-direction: column;
@@ -517,9 +523,23 @@
         font-size: 0.78rem;
       }
       .mobile-contact-strip i { color: var(--accent); font-size: 0.85rem; }
+      
+      .nav-menu.active .nav-item {
+        animation: navIn 0.45s cubic-bezier(0.23, 1, 0.32, 1) both;
+      }
+      .nav-menu.active .nav-item:nth-child(1) { animation-delay: 0.04s; }
+      .nav-menu.active .nav-item:nth-child(2) { animation-delay: 0.09s; }
+      .nav-menu.active .nav-item:nth-child(3) { animation-delay: 0.14s; }
+      .nav-menu.active .nav-item:nth-child(4) { animation-delay: 0.19s; }
+      .nav-menu.active .nav-item:nth-child(5) { animation-delay: 0.24s; }
+      .nav-menu.active .nav-item:nth-child(6) { animation-delay: 0.30s; }
+      @keyframes navIn {
+        from { opacity: 0; transform: translateX(28px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
     }
 
-    /* PAGE CONTENT STYLES (Mission & Values) */
+    /* PAGE CONTENT STYLES */
     .page-header {
       margin-top: var(--nav-h);
       background: linear-gradient(135deg, #0A1C2A 0%, #0D2A3E 100%);
@@ -604,7 +624,6 @@
     .footer-col a:hover { color: var(--accent); transform: translateX(6px); }
     .copyright { text-align: center; border-top: 1px solid #2c3a47; padding-top: 2rem; font-size: 0.8rem; }
     
-    /* Ensure all sections fit within viewport */
     section, footer, header, nav, .container, .page-header, .mission-statement, .values-section, .vision-section, .cta-section {
       width: 100%;
       max-width: 100%;
@@ -619,7 +638,13 @@
 <nav class="navbar" id="navbar">
   <div class="nav-container">
     <a href="index.html" class="logo-wrapper"><div class="logo-icon"><i class="fas fa-bolt" style="color:#0A1C2A;font-size:1.7rem"></i></div><div class="logo-text">VoltEdge <span>Group</span></div></a>
-    <button class="menu-toggle" id="mobileMenuBtn" aria-label="Toggle menu"><div class="hamburger"><span></span><span></span><span></span></div></button>
+    <button class="menu-toggle" id="mobileMenuBtn" aria-label="Toggle menu">
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
     <ul class="nav-menu" id="navMenu">
       <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
       <li class="nav-item">
@@ -676,10 +701,32 @@
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const btn = document.getElementById('mobileMenuBtn'), menu = document.getElementById('navMenu');
-  function openMenu() { menu.classList.add('active'); btn.classList.add('open'); document.body.classList.add('nav-open'); }
-  function closeMenu() { menu.classList.remove('active'); btn.classList.remove('open'); document.body.classList.remove('nav-open'); document.querySelectorAll('.nav-item.open').forEach(el => el.classList.remove('open')); }
-  btn.addEventListener('click', () => menu.classList.contains('active') ? closeMenu() : openMenu());
+  const btn = document.getElementById('mobileMenuBtn');
+  const menu = document.getElementById('navMenu');
+  
+  function openMenu() { 
+    menu.classList.add('active'); 
+    btn.classList.add('open'); 
+    document.body.classList.add('nav-open'); 
+  }
+  
+  function closeMenu() { 
+    menu.classList.remove('active'); 
+    btn.classList.remove('open'); 
+    document.body.classList.remove('nav-open'); 
+    document.querySelectorAll('.nav-item.open').forEach(el => el.classList.remove('open')); 
+  }
+  
+  if (btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (menu.classList.contains('active')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+  }
 
   document.querySelectorAll('.nav-item').forEach(item => {
     const link = item.querySelector('.nav-link');
@@ -695,6 +742,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   });
+  
   menu.querySelectorAll('a:not(.nav-link)').forEach(a => a.addEventListener('click', closeMenu));
   document.querySelectorAll('.nav-link[href]:not([href="#"])').forEach(a => a.addEventListener('click', function() { if (window.innerWidth <= 900) closeMenu(); }));
 
