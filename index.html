@@ -362,6 +362,174 @@
 
     .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* =========================================
+   MOBILE OVERFLOW FIXES
+   Add at the VERY END of your CSS
+========================================= */
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden !important;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+img,
+video,
+iframe,
+canvas,
+svg {
+    max-width: 100%;
+    height: auto;
+}
+
+.container,
+.nav-container,
+.mega-inner,
+.hero,
+.hero-content,
+.about-grid,
+.services-cards,
+.training-grid,
+.stats-grid,
+.footer-grid {
+    width: 100%;
+    max-width: 100%;
+}
+
+@media (max-width: 900px) {
+
+    html,
+    body {
+        overflow-x: hidden !important;
+        width: 100%;
+    }
+
+    .navbar,
+    .nav-container,
+    .nav-menu,
+    .mega-dropdown,
+    .mega-inner,
+    .mega-columns,
+    .mega-col,
+    .mega-preview,
+    .hero,
+    .container {
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+
+    .hero {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .hero .container {
+        width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .hero-content {
+        width: 100%;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(2rem, 8vw, 2.8rem);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .hero-content p {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .hero-buttons {
+        width: 100%;
+    }
+
+    .hero-btn {
+        max-width: 100%;
+        white-space: normal;
+        text-align: center;
+    }
+
+    .slider-arrow {
+        z-index: 20;
+    }
+
+    .preview-image {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .mega-col a {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .service-card-modern,
+    .training-card {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .about-grid,
+    .services-cards,
+    .training-grid,
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+
+    .container,
+    .nav-container {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .hero-content h1 {
+        font-size: 1.9rem;
+        line-height: 1.2;
+    }
+
+    .section-header h2,
+    .training-header h2,
+    .about-text h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero-buttons,
+    .cta-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .hero-btn {
+        width: 100%;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
   </style>
 </head>
 
