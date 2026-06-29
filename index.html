@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="description" content="VoltEdge Group — electrical engineering, power plant delivery, and operator training across Africa. High-voltage infrastructure, renewable integration, and industrial automation." />
 <meta name="theme-color" content="#0B0D10" />
+<meta property="og:title" content="VoltEdge Group — Electrical Engineering & Power Plant Specialists" />
+<meta property="og:description" content="High-voltage infrastructure, renewable integration, and industrial automation — engineered and operated end to end." />
+<meta property="og:type" content="website" />
 <title>VoltEdge Group | Electrical Engineering & Power Plant Specialists</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +17,7 @@
 
 <style>
 /* ======================================================================
-   RESET + TOKENS
+   0. RESET + TOKENS
 ====================================================================== */
 *,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
 
@@ -24,21 +27,26 @@
   --surface:    #14171D;
   --surface-2:  #1B1F27;
   --line:       rgba(255,255,255,0.09);
+  --line-soft:  rgba(255,255,255,0.05);
   --paper:      #F7F6F2;
+  --paper-dim:  #EEECE5;
   --text-0:     #F4F4F2;
   --text-1:     #A7ACB6;
   --text-2:     #6E737D;
   --ink-text-0: #14161A;
   --ink-text-1: #565B63;
-  --copper:     #FF6A33;
-  --copper-soft:#FFB088;
-  --copper-dim: rgba(255,106,51,0.14);
-  --r-sm: 12px;
-  --r-md: 18px;
-  --r-pill: 999px;
+  --ink-text-2: #8A8F97;
+  --copper:        #FF6A33;
+  --copper-soft:   #FFB088;
+  --copper-dim:    rgba(255,106,51,0.14);
+  --current:       #3FE0E8;
+  --success: #3DDC97;
+  --warning: #FFC857;
+  --error:   #FF5C5C;
+  --r-xs: 6px; --r-sm: 12px; --r-md: 18px; --r-lg: 26px; --r-pill: 999px;
+  --ease: cubic-bezier(.16,.84,.32,1);
   --ease-soft: cubic-bezier(.4,0,.2,1);
-  --dur-s: .25s;
-  --dur-m: .5s;
+  --dur-s: .25s; --dur-m: .5s; --dur-l: .9s;
   --nav-h: 84px;
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
@@ -53,7 +61,7 @@ body{
   line-height:1.65;
   overflow-x:hidden;
   opacity:0;
-  transition:opacity .6s ease;
+  transition:opacity .6s var(--ease);
 }
 body.is-ready{ opacity:1; }
 img{ max-width:100%; height:auto; display:block; }
@@ -63,21 +71,58 @@ button{ font-family:inherit; }
 
 ::selection{ background:var(--copper); color:#fff; }
 
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+}
+
 .skip-link{
   position:absolute; left:-999px; top:0; z-index:2000;
   background:var(--copper); color:#fff; padding:12px 20px; font-weight:600; border-radius:0 0 var(--r-sm) 0;
 }
 .skip-link:focus{ left:0; }
 
+:focus-visible{ outline:2px solid var(--copper); outline-offset:3px; border-radius:4px; }
+
 /* ======================================================================
-   LAYOUT UTILITIES
+   1. BACKGROUND
+====================================================================== */
+.blueprint-bg{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(var(--ink-blueprint-line,rgba(0,0,0,.035)) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ink-blueprint-line,rgba(0,0,0,.035)) 1px, transparent 1px);
+  background-size:88px 88px;
+  opacity:.7;
+}
+.dark-section .blueprint-bg{ display:none; }
+
+/* ======================================================================
+   2. CUSTOM CURSOR
+====================================================================== */
+.cursor-dot, .cursor-ring{
+  position:fixed; top:0; left:0; pointer-events:none; z-index:9999;
+  border-radius:50%; transform:translate(-50%,-50%);
+  transition:opacity .2s var(--ease);
+}
+.cursor-dot{ width:6px; height:6px; background:var(--copper); }
+.cursor-ring{ width:34px; height:34px; border:1px solid rgba(255,106,51,.5); transition:width .25s var(--ease), height .25s var(--ease), opacity .2s var(--ease), border-color .25s; }
+.cursor-ring.is-active{ width:54px; height:54px; border-color:var(--copper); background:var(--copper-dim); }
+@media (hover:none), (max-width:900px){ .cursor-dot,.cursor-ring{ display:none; } }
+
+/* ======================================================================
+   3. LAYOUT UTILITIES
 ====================================================================== */
 .container{ max-width:1280px; margin:0 auto; padding:0 40px; position:relative; }
+@media (max-width:1024px){ .container{ padding:0 32px; } }
 @media (max-width:768px){ .container{ padding:0 24px; } }
 @media (max-width:480px){ .container{ padding:0 18px; } }
 
-.section{ padding:100px 0; position:relative; }
-@media (max-width:768px){ .section{ padding:70px 0; } }
+.section{ padding:128px 0; position:relative; }
+@media (max-width:1024px){ .section{ padding:96px 0; } }
+@media (max-width:768px){ .section{ padding:72px 0; } }
+@media (max-width:480px){ .section{ padding:56px 0; } }
+
+.dark-section{ background:var(--ink); color:var(--text-0); }
 
 .eyebrow{
   display:inline-flex; align-items:center; gap:10px;
@@ -86,12 +131,14 @@ button{ font-family:inherit; }
   margin-bottom:22px;
 }
 .eyebrow .tick{ width:22px; height:1px; background:var(--copper); display:inline-block; }
+.eyebrow .num{ opacity:.55; }
 
 .heading-xl{
   font-family:var(--font-display); font-weight:700;
   font-size:clamp(2.2rem, 4.4vw, 4.1rem);
   line-height:1.05; letter-spacing:-.02em; color:var(--ink-text-0);
 }
+.dark-section .heading-xl{ color:var(--text-0); }
 .heading-xl em{ font-style:normal; color:var(--copper); }
 
 .heading-md{
@@ -99,23 +146,26 @@ button{ font-family:inherit; }
   font-size:clamp(1.7rem, 2.6vw, 2.5rem); line-height:1.15; letter-spacing:-.015em;
   color:var(--ink-text-0);
 }
+.dark-section .heading-md{ color:var(--text-0); }
 
 .lede{ font-size:1.08rem; color:var(--ink-text-1); max-width:540px; }
+.dark-section .lede{ color:var(--text-1); }
 
-.section-head{ max-width:680px; margin-bottom:56px; }
+.section-head{ max-width:680px; margin-bottom:64px; }
 .section-head.center{ margin-inline:auto; text-align:center; }
 .section-head.center .eyebrow{ justify-content:center; }
 
 /* ======================================================================
-   BUTTONS
+   4. BUTTONS
 ====================================================================== */
 .btn{
   display:inline-flex; align-items:center; justify-content:center; gap:10px;
   font-family:var(--font-body); font-weight:600; font-size:.94rem;
   padding:15px 30px; border-radius:var(--r-pill); border:none; cursor:pointer;
-  transition:transform var(--dur-s) var(--ease-soft), box-shadow var(--dur-s) var(--ease-soft);
+  position:relative; white-space:nowrap; transition:transform var(--dur-s) var(--ease-soft), box-shadow var(--dur-s) var(--ease-soft), background var(--dur-s);
+  will-change:transform;
 }
-.btn i{ font-size:.78em; transition:transform .3s ease; }
+.btn i{ font-size:.78em; transition:transform .3s var(--ease); }
 .btn:hover i{ transform:translateX(3px); }
 
 .btn-copper{
@@ -129,11 +179,17 @@ button{ font-family:inherit; }
 }
 .btn-ghost-dark:hover{ background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.5); }
 
+.btn-ghost-light{
+  background:transparent; color:var(--ink-text-0); border:1.5px solid rgba(20,22,26,.16);
+}
+.btn-ghost-light:hover{ border-color:var(--copper); color:var(--copper); }
+
 .btn-sm{ padding:10px 22px; font-size:.82rem; }
 .btn-lg{ padding:18px 36px; font-size:1rem; }
+@media (max-width:480px){ .btn-lg{ padding:15px 28px; font-size:.92rem; } }
 
 /* ======================================================================
-   FLOATING QUOTE BUTTON
+   5. FLOATING QUOTE BUTTON
 ====================================================================== */
 .quote-float{
   position:fixed; right:30px; bottom:30px; z-index:900;
@@ -157,11 +213,11 @@ button{ font-family:inherit; }
 }
 
 /* ======================================================================
-   NAVIGATION
+   6. NAVIGATION - FIXED MOBILE DROPDOWN
 ====================================================================== */
 .navbar{
   position:fixed; top:0; left:0; right:0; z-index:800; height:var(--nav-h);
-  transition:background var(--dur-m) var(--ease-soft), height var(--dur-m), box-shadow var(--dur-m);
+  transition:background var(--dur-m) var(--ease-soft), height var(--dur-m), box-shadow var(--dur-m), border-color var(--dur-m);
   border-bottom:1px solid transparent;
 }
 .navbar.scrolled{
@@ -174,6 +230,7 @@ button{ font-family:inherit; }
   max-width:1400px; margin:0 auto; padding:0 40px; height:100%;
   display:flex; align-items:center; justify-content:space-between;
 }
+@media (max-width:1024px){ .nav-container{ padding:0 32px; } }
 @media (max-width:768px){ .nav-container{ padding:0 22px; } }
 
 .logo{ display:flex; align-items:center; gap:12px; flex-shrink:0; }
@@ -195,17 +252,18 @@ button{ font-family:inherit; }
 }
 .nav-link:hover, .nav-link.active{ color:#fff; }
 .nav-link:hover::after, .nav-link.active::after{ width:18px; }
-.nav-link .chev{ font-size:.55rem; opacity:.5; transition:transform .3s ease; }
+.nav-link .chev{ font-size:.55rem; opacity:.5; transition:transform .3s var(--ease); }
+.nav-item:hover .chev{ transform:rotate(180deg); }
 
 .nav-cta{ margin-left:14px; }
 
-/* Desktop mega dropdown */
+/* Mega dropdown - desktop */
 .mega-dropdown{
   position:absolute; top:100%; left:50%; transform:translateX(-50%) translateY(10px);
   width:560px; background:rgba(16,19,26,.98); backdrop-filter:blur(22px);
   border:1px solid rgba(255,255,255,.07); border-radius:var(--r-md);
   padding:28px; opacity:0; visibility:hidden; pointer-events:none;
-  transition:opacity var(--dur-s) var(--ease-soft), transform var(--dur-s) var(--ease-soft);
+  transition:opacity var(--dur-s) var(--ease-soft), transform var(--dur-s) var(--ease-soft), visibility var(--dur-s);
   box-shadow:0 30px 80px -20px rgba(0,0,0,.7);
 }
 .nav-item:hover .mega-dropdown{ opacity:1; visibility:visible; pointer-events:auto; transform:translateX(-50%) translateY(0); }
@@ -215,6 +273,14 @@ button{ font-family:inherit; }
 .mega-col a:last-child{ border-bottom:none; }
 .mega-col a i{ color:var(--copper); font-size:.75rem; width:16px; }
 .mega-col a:hover{ color:#fff; padding-left:5px; }
+.mega-preview{ border-radius:var(--r-sm); overflow:hidden; position:relative; }
+.mega-preview img{ width:100%; height:100%; object-fit:cover; filter:saturate(.7) contrast(1.05); }
+.mega-preview::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,13,16,.1), rgba(11,13,16,.92)); }
+.mega-preview-text{ position:absolute; bottom:0; left:0; right:0; padding:18px; z-index:2; }
+.mega-preview-text h5{ font-family:var(--font-display); color:#fff; font-size:.98rem; margin-bottom:4px; }
+.mega-preview-text p{ color:var(--text-1); font-size:.76rem; }
+
+@media (max-width:1100px){ .mega-dropdown{ width:460px; } }
 
 /* Mobile toggle */
 .menu-toggle{ display:none; background:none; border:none; cursor:pointer; padding:8px; z-index:1000; }
@@ -225,7 +291,7 @@ button{ font-family:inherit; }
 .menu-toggle.open .hamburger span:nth-child(3){ transform:translateY(-8px) rotate(-45deg); }
 
 /* ============================================================
-   MOBILE NAV - FIXED WITH HIGH CONTRAST
+   MOBILE NAV - FIXED DROPDOWN
 ============================================================ */
 @media (max-width:900px){
   .menu-toggle{ display:flex; }
@@ -260,67 +326,74 @@ button{ font-family:inherit; }
     font-family:var(--font-display); 
     font-weight:500;
     color:rgba(255,255,255,.85);
-    cursor:pointer;
   }
   .nav-link::after{ display:none; }
   .nav-link.active{ color:var(--copper); }
-  .nav-link .chev{ font-size:.7rem; transition:transform .3s ease; }
+  .nav-link .chev{ font-size:.7rem; transition:transform .3s var(--ease); }
   .nav-item.open .nav-link .chev{ transform:rotate(180deg); }
 
-  /* MOBILE DROPDOWN - HIGH CONTRAST FIX */
-  .mega-dropdown{
+  /* FIXED: Mobile dropdown - no desktop hover transform on phones */
+  .mega-dropdown,
+  .nav-item:hover .mega-dropdown{
     position:static;
-    transform:none;
+    left:auto;
+    top:auto;
+    transform:none !important;
     width:100%;
-    background:rgba(0,0,0,0.25);
+    background:transparent;
     border:none;
     border-radius:0;
-    padding:0 0 0 12px;
-    opacity:1 !important;
-    visibility:visible !important;
-    pointer-events:auto !important;
+    padding:0;
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
     box-shadow:none;
     max-height:0;
     overflow:hidden;
-    transition:max-height 0.4s ease, padding 0.4s ease;
+    transition:max-height .35s var(--ease-soft), padding-bottom .35s var(--ease-soft);
   }
   
-  .nav-item.open .mega-dropdown{ 
-    max-height:500px; 
-    padding:0 0 12px 12px;
+  .nav-item.open .mega-dropdown,
+  .nav-item.open:hover .mega-dropdown{ 
+    transform:none !important;
+    max-height:650px; 
+    padding-bottom:12px;
   }
   
   .mega-grid{ 
+    display:grid;
     grid-template-columns:1fr; 
     gap:0;
+    width:100%;
+    padding-left:12px;
   }
   
   .mega-col{ 
     padding:0;
   }
   
-  /* FIX: High contrast for headers */
   .mega-col h4{ 
     font-size:.7rem; 
     margin:12px 0 6px;
     color:var(--copper);
     opacity:1;
-    letter-spacing:.1em;
+    letter-spacing:.14em;
     text-transform:uppercase;
     font-family:var(--font-mono);
   }
   
-  /* FIX: High contrast for links - FULL WHITE */
   .mega-col a{ 
     display:flex;
     align-items:center;
-    gap:10px;
-    padding:12px 0;
+    gap:12px;
+    width:100%;
+    padding:13px 0; 
     font-size:.95rem;
     font-weight:500;
     border-bottom:1px solid rgba(255,255,255,.08);
-    color:#fff;
-    transition:all var(--dur-s);
+    color:#ffffff !important;
+    opacity:1 !important;
+    transform:none !important;
   }
   .mega-col a:last-child{ border-bottom:none; }
   .mega-col a i{ 
@@ -328,16 +401,15 @@ button{ font-family:inherit; }
     font-size:.85rem; 
     width:20px;
   }
-  .mega-col a:hover, .mega-col a:active{ 
-    color:var(--copper); 
-    padding-left:6px;
+  .mega-col a:hover{ 
+    color:#fff; 
+    padding-left:4px;
   }
   .mega-preview{ display:none; }
 
-  /* Mobile email - white text */
   .mobile-email{ 
     padding:20px 0 10px; 
-    color:#fff;
+    color:var(--text-0); 
     font-family:var(--font-mono); 
     font-size:.82rem; 
     display:flex; 
@@ -350,7 +422,7 @@ button{ font-family:inherit; }
 }
 
 /* ======================================================================
-   HERO
+   7. HERO
 ====================================================================== */
 .hero{
   position:relative; min-height:100vh; display:flex; align-items:center;
@@ -359,8 +431,8 @@ button{ font-family:inherit; }
 .hero-slider{ position:absolute; inset:0; z-index:0; }
 .hero-slider .slide{
   position:absolute; inset:0; background-size:cover; background-position:center;
-  opacity:0; transform:scale(1.06);
-  transition:opacity 1.4s var(--ease-soft);
+  opacity:0; transform:scale(1.06); filter:saturate(.55) contrast(1.08) brightness(.8);
+  transition:opacity 1.4s var(--ease-soft), transform 7s linear;
 }
 .hero-slider .slide.active{ opacity:1; transform:scale(1); }
 .hero-overlay{
@@ -369,6 +441,8 @@ button{ font-family:inherit; }
     radial-gradient(ellipse 60% 80% at 18% 30%, rgba(255,106,51,.16), transparent 60%),
     linear-gradient(125deg, rgba(11,13,16,.96) 8%, rgba(11,13,16,.78) 42%, rgba(11,13,16,.55) 100%);
 }
+.hero-trace{ position:absolute; inset:0; z-index:2; opacity:.5; pointer-events:none; }
+
 .hero-content{ position:relative; z-index:3; max-width:660px; }
 
 .hero-badge{
@@ -413,8 +487,15 @@ button{ font-family:inherit; }
 }
 .slider-arrows button:hover{ background:var(--copper); border-color:var(--copper); color:#0B0D10; }
 
+.hero-meter{
+  position:absolute; right:48px; bottom:38px; z-index:4; display:none;
+  font-family:var(--font-mono); font-size:.7rem; color:var(--text-1); text-align:right; letter-spacing:.05em;
+}
+.hero-meter span{ color:var(--copper); }
+@media (min-width:1180px){ .hero-meter{ display:block; } }
+
 /* ======================================================================
-   ABOUT
+   8. ABOUT
 ====================================================================== */
 .about{ background:var(--paper); }
 .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; }
@@ -444,9 +525,10 @@ button{ font-family:inherit; }
 }
 
 /* ======================================================================
-   SERVICES
+   9. SERVICES
 ====================================================================== */
 .services{ background:var(--ink); color:#fff; }
+.services .lede{ color:var(--text-1); }
 .services-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(330px,1fr)); gap:28px; }
 
 .svc-card{
@@ -477,7 +559,7 @@ button{ font-family:inherit; }
 }
 
 /* ======================================================================
-   TRAINING
+   10. TRAINING
 ====================================================================== */
 .training{ background:var(--paper); }
 .training-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:24px; }
@@ -500,23 +582,24 @@ button{ font-family:inherit; }
 @media (max-width:480px){ .training-grid{ grid-template-columns:1fr; } }
 
 /* ======================================================================
-   CTA
+   11. CTA
 ====================================================================== */
-.cta{ background:var(--ink); color:#fff; text-align:center; padding:100px 0; position:relative; overflow:hidden; }
+.cta{ background:var(--ink); color:#fff; text-align:center; padding:120px 0; position:relative; overflow:hidden; }
+.cta-trace{ position:absolute; inset:0; opacity:.35; pointer-events:none; }
 .cta h2{ font-family:var(--font-display); font-weight:700; font-size:clamp(2rem,4.4vw,3.2rem); letter-spacing:-.02em; margin-bottom:18px; position:relative; z-index:2; }
 .cta p{ color:var(--text-1); font-size:1.08rem; max-width:520px; margin:0 auto 38px; position:relative; z-index:2; }
 .cta-buttons{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; position:relative; z-index:2; }
 
 @media (max-width:480px){
-  .cta{ padding:70px 0; }
+  .cta{ padding:80px 0; }
   .cta-buttons{ flex-direction:column; align-items:stretch; padding:0 20px; }
 }
 
 /* ======================================================================
-   FOOTER
+   12. FOOTER
 ====================================================================== */
-.footer{ background:#080A0C; color:var(--text-1); padding:60px 0 30px; }
-.footer-grid{ display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:48px; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,.06); }
+.footer{ background:#080A0C; color:var(--text-1); padding:72px 0 30px; }
+.footer-grid{ display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:48px; padding-bottom:46px; border-bottom:1px solid rgba(255,255,255,.06); }
 .footer-brand .logo-word{ color:#fff; }
 .footer-brand p{ font-size:.92rem; max-width:300px; margin-top:18px; line-height:1.8; }
 .footer-col h4{ font-family:var(--font-mono); color:#fff; font-size:.72rem; text-transform:uppercase; letter-spacing:.12em; margin-bottom:18px; opacity:.9; }
@@ -526,7 +609,7 @@ button{ font-family:inherit; }
 .footer-bottom{ padding-top:26px; display:flex; justify-content:space-between; align-items:center; font-size:.82rem; font-family:var(--font-mono); }
 .footer-social{ display:flex; gap:12px; }
 .footer-social a{
-  width:36px; height:36px; border-radius:6px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
+  width:36px; height:36px; border-radius:var(--r-xs); background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
   display:flex; align-items:center; justify-content:center; color:var(--text-1); transition:all var(--dur-s);
 }
 .footer-social a:hover{ background:var(--copper); border-color:var(--copper); color:#fff; transform:translateY(-3px); }
@@ -536,18 +619,24 @@ button{ font-family:inherit; }
 @media (max-width:480px){ .footer-grid{ grid-template-columns:1fr; gap:30px; } }
 
 /* ======================================================================
-   SCROLL REVEAL
+   13. SCROLL REVEAL
 ====================================================================== */
 [data-reveal]{ opacity:0; transform:translateY(28px); transition:opacity .8s var(--ease-soft), transform .8s var(--ease-soft); }
 [data-reveal].is-visible{ opacity:1; transform:translateY(0); }
+[data-reveal="zoom"]{ transform:translateY(0) scale(.94); }
+[data-reveal="zoom"].is-visible{ transform:scale(1); }
 </style>
 </head>
 
 <body>
 <a href="#main" class="skip-link">Skip to content</a>
 
+<div class="blueprint-bg" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+
 <!-- Floating Quote Button -->
-<a href="quote.html" class="quote-float" aria-label="Request a quote">
+<a href="quote.html" class="quote-float btn-magnetic" aria-label="Request a quote">
   <span class="dot" aria-hidden="true"></span>
   <span class="label">Get a quote</span>
 </a>
@@ -574,7 +663,7 @@ button{ font-family:inherit; }
       <li class="nav-item" role="none"><a href="index.html" class="nav-link active" role="menuitem">Home</a></li>
 
       <li class="nav-item" role="none">
-        <button class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(this)">
+        <button class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false">
           About <i class="fas fa-chevron-down chev"></i>
         </button>
         <div class="mega-dropdown" role="menu">
@@ -591,7 +680,7 @@ button{ font-family:inherit; }
       </li>
 
       <li class="nav-item" role="none">
-        <button class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(this)">
+        <button class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false">
           Solutions <i class="fas fa-chevron-down chev"></i>
         </button>
         <div class="mega-dropdown" role="menu">
@@ -608,7 +697,7 @@ button{ font-family:inherit; }
       </li>
 
       <li class="nav-item" role="none">
-        <button class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(this)">
+        <button class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false">
           Projects <i class="fas fa-chevron-down chev"></i>
         </button>
         <div class="mega-dropdown" role="menu">
@@ -633,7 +722,7 @@ button{ font-family:inherit; }
 
     <!-- Desktop CTA -->
     <div class="nav-cta">
-      <a href="contact.html" class="btn btn-copper btn-sm">Free consultation</a>
+      <a href="contact.html" class="btn btn-copper btn-sm btn-magnetic">Free consultation</a>
     </div>
   </div>
 </nav>
@@ -652,17 +741,32 @@ button{ font-family:inherit; }
   </div>
   <div class="hero-overlay"></div>
 
+  <svg class="hero-trace" viewBox="0 0 1280 800" preserveAspectRatio="none" aria-hidden="true">
+    <path id="tracePath1" d="M -20 620 L 240 620 L 240 460 L 520 460 L 520 200 L 900 200 L 900 90 L 1300 90"
+      fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="1.5"/>
+    <circle r="4" fill="#FF6A33">
+      <animateMotion dur="7s" repeatCount="indefinite" rotate="auto">
+        <mpath href="#tracePath1"/>
+      </animateMotion>
+    </circle>
+    <circle cx="240" cy="620" r="3.5" fill="rgba(255,255,255,0.35)"/>
+    <circle cx="520" cy="460" r="3.5" fill="rgba(255,255,255,0.35)"/>
+    <circle cx="900" cy="200" r="3.5" fill="rgba(255,255,255,0.35)"/>
+  </svg>
+
   <div class="container">
     <div class="hero-content" data-reveal>
       <div class="hero-badge"><span class="dot"></span>Live across 3 countries — engineering excellence since 2009</div>
       <h1>Powering progress,<span class="accent-line">trace by trace.</span></h1>
       <p>VoltEdge designs, builds and operates high-voltage infrastructure, renewable integration and industrial automation — engineered for the long run, across Africa and beyond.</p>
       <div class="hero-buttons">
-        <a href="contact.html" class="btn btn-copper btn-lg">Free consultation <i class="fas fa-arrow-right"></i></a>
+        <a href="contact.html" class="btn btn-copper btn-lg btn-magnetic">Free consultation <i class="fas fa-arrow-right"></i></a>
         <a href="solutions-power.html" class="btn btn-ghost-dark btn-lg">Explore solutions</a>
       </div>
     </div>
   </div>
+
+  <div class="hero-meter">GRID STATUS <span>● STABLE</span><br>VOLTAGE 11–132 kV CLASS</div>
 
   <div class="slider-controls">
     <div class="slider-dots" id="sliderDots"></div>
@@ -680,7 +784,7 @@ button{ font-family:inherit; }
   <div class="container">
     <div class="about-grid">
       <div class="about-col" data-reveal>
-        <span class="eyebrow"><span class="tick"></span>WHO WE ARE</span>
+        <span class="eyebrow"><span class="num">FIG. 01</span><span class="tick"></span>WHO WE ARE</span>
         <h2 class="heading-md">Engineering, built to run for decades — not just switch on.</h2>
         <p>We are a professional engineering company providing comprehensive services in electrical engineering, civil and building construction, and engineering technology. Our expertise extends to power generation systems — from design and installation through operation and maintenance.</p>
         <p>We also deliver specialised training for power plant operators and engineers, equipping clients with the skills required for safe, efficient and sustainable operations across residential, commercial and industrial sectors.</p>
@@ -688,7 +792,7 @@ button{ font-family:inherit; }
       </div>
 
       <div class="about-col" data-reveal>
-        <span class="eyebrow"><span class="tick"></span>OUR MISSION</span>
+        <span class="eyebrow"><span class="num">FIG. 02</span><span class="tick"></span>OUR MISSION</span>
         <h2 class="heading-md">The premier engineering partner in Africa.</h2>
         <p>We're committed to becoming the region's most trusted name in electrical engineering, power generation and technical training — leading with innovation, safety and sustainability on every project we undertake.</p>
 
@@ -707,7 +811,7 @@ button{ font-family:inherit; }
 <section class="services section" id="services">
   <div class="container">
     <div class="section-head center" data-reveal>
-      <span class="eyebrow"><span class="tick"></span>WHAT WE DO</span>
+      <span class="eyebrow"><span class="num">FIG. 03</span><span class="tick"></span>WHAT WE DO</span>
       <h2 class="heading-xl">Electrical engineering &amp; <em>power plant services</em></h2>
       <p class="lede" style="margin-inline:auto;">Comprehensive electrical engineering solutions — from first drawing to long-term operation and optimisation.</p>
     </div>
@@ -752,18 +856,18 @@ button{ font-family:inherit; }
 <section class="training section" id="training">
   <div class="container">
     <div class="section-head center" data-reveal>
-      <span class="eyebrow"><span class="tick"></span>PROFESSIONAL DEVELOPMENT</span>
+      <span class="eyebrow"><span class="num">FIG. 04</span><span class="tick"></span>PROFESSIONAL DEVELOPMENT</span>
       <h2 class="heading-xl">Power plant <em>training &amp; instruction</em></h2>
       <p class="lede" style="margin-inline:auto;">Specialised programmes built for power plant operators, engineers and industry professionals.</p>
     </div>
 
     <div class="training-grid">
-      <div class="tr-card" data-reveal><div class="tr-icon"><i class="fas fa-chalkboard-user"></i></div><h3>Operator &amp; Engineer Training</h3><p>Technical training for power plant operators and engineers — built for real-world application.</p></div>
-      <div class="tr-card" data-reveal><div class="tr-icon"><i class="fas fa-shield-alt"></i></div><h3>Safety &amp; Procedures</h3><p>Power plant operation and safety procedures training to ensure compliance and prevent incidents.</p></div>
-      <div class="tr-card" data-reveal><div class="tr-icon"><i class="fas fa-tools"></i></div><h3>Maintenance Training</h3><p>Comprehensive maintenance training for mechanical and electrical systems in power plants.</p></div>
-      <div class="tr-card" data-reveal><div class="tr-icon"><i class="fas fa-microchip"></i></div><h3>SCADA &amp; Controls</h3><p>SCADA and control system training for modern power plant automation and monitoring.</p></div>
-      <div class="tr-card" data-reveal><div class="tr-icon"><i class="fas fa-search"></i></div><h3>Troubleshooting</h3><p>Fault diagnosis in power systems — practical, hands-on training.</p></div>
-      <div class="tr-card" data-reveal><div class="tr-icon"><i class="fas fa-building"></i></div><h3>On-Site Programs</h3><p>On-site and classroom-based instruction tailored to your organisation's needs.</p></div>
+      <div class="tr-card" data-reveal="zoom"><div class="tr-icon"><i class="fas fa-chalkboard-user"></i></div><h3>Operator &amp; Engineer Training</h3><p>Technical training for power plant operators and engineers — built for real-world application.</p></div>
+      <div class="tr-card" data-reveal="zoom"><div class="tr-icon"><i class="fas fa-shield-alt"></i></div><h3>Safety &amp; Procedures</h3><p>Power plant operation and safety procedures training to ensure compliance and prevent incidents.</p></div>
+      <div class="tr-card" data-reveal="zoom"><div class="tr-icon"><i class="fas fa-tools"></i></div><h3>Maintenance Training</h3><p>Comprehensive maintenance training for mechanical and electrical systems in power plants.</p></div>
+      <div class="tr-card" data-reveal="zoom"><div class="tr-icon"><i class="fas fa-microchip"></i></div><h3>SCADA &amp; Controls</h3><p>SCADA and control system training for modern power plant automation and monitoring.</p></div>
+      <div class="tr-card" data-reveal="zoom"><div class="tr-icon"><i class="fas fa-search"></i></div><h3>Troubleshooting</h3><p>Fault diagnosis in power systems — practical, hands-on training.</p></div>
+      <div class="tr-card" data-reveal="zoom"><div class="tr-icon"><i class="fas fa-building"></i></div><h3>On-Site Programs</h3><p>On-site and classroom-based instruction tailored to your organisation's needs.</p></div>
     </div>
   </div>
 </section>
@@ -772,12 +876,18 @@ button{ font-family:inherit; }
      CTA
 ============================================================ -->
 <section class="cta">
+  <svg class="cta-trace" viewBox="0 0 1280 400" preserveAspectRatio="none" aria-hidden="true">
+    <path id="tracePath2" d="M -20 60 L 300 60 L 300 220 L 680 220 L 680 340 L 1300 340" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+    <circle r="4" fill="#3FE0E8">
+      <animateMotion dur="6s" repeatCount="indefinite" rotate="auto"><mpath href="#tracePath2"/></animateMotion>
+    </circle>
+  </svg>
   <div class="container">
     <span class="eyebrow" style="justify-content:center;"><span class="tick"></span>READY WHEN YOU ARE<span class="tick"></span></span>
     <h2 data-reveal>Ready to energise your next project?</h2>
     <p data-reveal>Get a free consultation from our engineering team and find out how VoltEdge can power your success.</p>
     <div class="cta-buttons" data-reveal>
-      <a href="contact.html" class="btn btn-copper btn-lg">Contact our team <i class="fas fa-arrow-right"></i></a>
+      <a href="contact.html" class="btn btn-copper btn-lg btn-magnetic">Contact our team <i class="fas fa-arrow-right"></i></a>
       <a href="quote.html" class="btn btn-ghost-dark btn-lg">Request a quote</a>
     </div>
   </div>
@@ -835,104 +945,17 @@ button{ font-family:inherit; }
 </footer>
 
 <script>
-// DROPDOWN TOGGLE - WORKS ON MOBILE
-function toggleDropdown(button) {
-  // Only run on mobile
-  if (window.innerWidth > 900) return;
-  
-  // Prevent default behavior
-  event.preventDefault();
-  event.stopPropagation();
-  
-  // Get the parent nav-item
-  var parent = button.closest('.nav-item');
-  if (!parent) return;
-  
-  // Check if it's already open
-  var isOpen = parent.classList.contains('open');
-  
-  // Close all other open dropdowns
-  document.querySelectorAll('.nav-item.open').forEach(function(item) {
-    if (item !== parent) {
-      item.classList.remove('open');
-      var btn = item.querySelector('.nav-link');
-      if (btn) btn.setAttribute('aria-expanded', 'false');
-    }
-  });
-  
-  // Toggle this one
-  if (isOpen) {
-    parent.classList.remove('open');
-    button.setAttribute('aria-expanded', 'false');
-  } else {
-    parent.classList.add('open');
-    button.setAttribute('aria-expanded', 'true');
-  }
-}
-
-// Mobile menu toggle
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   document.body.classList.add('is-ready');
-  
-  var menuToggle = document.getElementById('menuToggle');
-  var navMenu = document.getElementById('navMenu');
-  
-  if (menuToggle && navMenu) {
-    menuToggle.addEventListener('click', function() {
-      var isOpen = navMenu.classList.toggle('active');
-      this.classList.toggle('open');
-      this.setAttribute('aria-expanded', isOpen);
-      document.body.classList.toggle('nav-open', isOpen);
-      
-      // Close all dropdowns when closing menu
-      if (!isOpen) {
-        document.querySelectorAll('.nav-item.open').forEach(function(item) {
-          item.classList.remove('open');
-          var btn = item.querySelector('.nav-link');
-          if (btn) btn.setAttribute('aria-expanded', 'false');
-        });
-      }
-    });
-  }
-  
-  // Close menu when clicking a link
-  document.querySelectorAll('#navMenu a:not([href="#"])').forEach(function(link) {
-    link.addEventListener('click', function() {
-      if (window.innerWidth <= 900) {
-        navMenu.classList.remove('active');
-        menuToggle.classList.remove('open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-        document.body.classList.remove('nav-open');
-        document.querySelectorAll('.nav-item.open').forEach(function(item) {
-          item.classList.remove('open');
-          var btn = item.querySelector('.nav-link');
-          if (btn) btn.setAttribute('aria-expanded', 'false');
-        });
-      }
-    });
-  });
-  
-  // Close on escape key
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && navMenu.classList.contains('active')) {
-      navMenu.classList.remove('active');
-      menuToggle.classList.remove('open');
-      menuToggle.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('nav-open');
-      document.querySelectorAll('.nav-item.open').forEach(function(item) {
-        item.classList.remove('open');
-        var btn = item.querySelector('.nav-link');
-        if (btn) btn.setAttribute('aria-expanded', 'false');
-      });
-    }
-  });
-  
-  // NAVBAR SCROLL
-  var navbar = document.getElementById('navbar');
-  var lastScroll = 0;
-  
-  window.addEventListener('scroll', function() {
-    var cur = window.pageYOffset;
+
+  /* ---------------- NAVBAR ---------------- */
+  const navbar = document.getElementById('navbar');
+  const menuToggle = document.getElementById('menuToggle');
+  const navMenu = document.getElementById('navMenu');
+  let lastScroll = 0;
+
+  window.addEventListener('scroll', function () {
+    const cur = window.pageYOffset;
     if (cur > 60) {
       navbar.classList.add('scrolled');
       navbar.classList.toggle('hidden', cur > lastScroll && cur > 160);
@@ -941,100 +964,180 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     lastScroll = cur;
   }, { passive: true });
-  
-  // HERO SLIDER
-  var slides = document.querySelectorAll('.hero-slider .slide');
-  var dotsContainer = document.getElementById('sliderDots');
-  var prevBtn = document.getElementById('prevSlide');
-  var nextBtn = document.getElementById('nextSlide');
-  var currentIndex = 0;
-  var sliderInterval;
-  
+
+  // Mobile menu toggle
+  menuToggle.addEventListener('click', function () {
+    const isOpen = navMenu.classList.toggle('active');
+    this.classList.toggle('open');
+    this.setAttribute('aria-expanded', isOpen);
+    document.body.classList.toggle('nav-open', isOpen);
+    if (!isOpen) {
+      document.querySelectorAll('.nav-item.open').forEach(el => el.classList.remove('open'));
+    }
+  });
+
+  // Mobile dropdown toggle - FIXED
+  document.querySelectorAll('.nav-item .nav-link[aria-haspopup="true"]').forEach(btn => {
+    btn.addEventListener('click', function (e) {
+      // Only for mobile
+      if (window.innerWidth <= 900) {
+        e.preventDefault();
+        e.stopPropagation();
+        const parent = this.closest('.nav-item');
+        const wasOpen = parent.classList.contains('open');
+        
+        // Close other open dropdowns
+        document.querySelectorAll('.nav-item.open').forEach(el => {
+          if (el !== parent) {
+            el.classList.remove('open');
+            const openBtn = el.querySelector('.nav-link[aria-haspopup="true"]');
+            if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
+          }
+        });
+        
+        // Toggle this one
+        parent.classList.toggle('open', !wasOpen);
+        this.setAttribute('aria-expanded', String(!wasOpen));
+      }
+    });
+  });
+
+  // Close menu when clicking a link
+  navMenu.querySelectorAll('a:not([href="#"])').forEach(link => {
+    link.addEventListener('click', function () {
+      if (window.innerWidth <= 900) {
+        navMenu.classList.remove('active');
+        menuToggle.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('nav-open');
+        document.querySelectorAll('.nav-item.open').forEach(el => el.classList.remove('open'));
+      }
+    });
+  });
+
+  // Close on escape key
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+      navMenu.classList.remove('active');
+      menuToggle.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('nav-open');
+      document.querySelectorAll('.nav-item.open').forEach(el => el.classList.remove('open'));
+    }
+  });
+
+  /* ---------------- HERO SLIDER ---------------- */
+  const slides = document.querySelectorAll('.hero-slider .slide');
+  const dotsContainer = document.getElementById('sliderDots');
+  const prevBtn = document.getElementById('prevSlide');
+  const nextBtn = document.getElementById('nextSlide');
+  let currentIndex = 0, sliderInterval;
+
   function initDots() {
     if (!dotsContainer) return;
     dotsContainer.innerHTML = '';
-    slides.forEach(function(_, i) {
-      var d = document.createElement('span');
+    slides.forEach((_, i) => {
+      const d = document.createElement('span');
       d.className = 'sdot' + (i === 0 ? ' active' : '');
-      d.addEventListener('click', function() { goToSlide(i); });
+      d.addEventListener('click', () => goToSlide(i));
       dotsContainer.appendChild(d);
     });
   }
-  
   function updateDots() {
     if (!dotsContainer) return;
-    var dots = dotsContainer.querySelectorAll('.sdot');
-    dots.forEach(function(d, i) {
-      d.classList.toggle('active', i === currentIndex);
-    });
+    dotsContainer.querySelectorAll('.sdot').forEach((d, i) => d.classList.toggle('active', i === currentIndex));
   }
-  
   function goToSlide(i) {
-    slides.forEach(function(s) { s.classList.remove('active'); });
+    slides.forEach(s => s.classList.remove('active'));
     currentIndex = (i + slides.length) % slides.length;
     slides[currentIndex].classList.add('active');
     updateDots();
     resetInterval();
   }
-  
   function nextSlide() { goToSlide(currentIndex + 1); }
   function prevSlide() { goToSlide(currentIndex - 1); }
   function startInterval() { sliderInterval = setInterval(nextSlide, 5000); }
   function resetInterval() { clearInterval(sliderInterval); startInterval(); }
-  
+
   if (slides.length) {
     initDots();
     startInterval();
     if (prevBtn) prevBtn.addEventListener('click', prevSlide);
     if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-    var hero = document.getElementById('hero');
+    const hero = document.getElementById('hero');
     if (hero) {
-      hero.addEventListener('mouseenter', function() { clearInterval(sliderInterval); });
+      hero.addEventListener('mouseenter', () => clearInterval(sliderInterval));
       hero.addEventListener('mouseleave', startInterval);
     }
   }
-  
-  // COUNTERS
-  var counters = document.querySelectorAll('.counter');
+
+  /* ---------------- COUNTERS ---------------- */
+  const counters = document.querySelectorAll('.counter');
   if (counters.length) {
-    var obs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
-          counters.forEach(function(counter) {
-            var target = parseInt(counter.dataset.target, 10);
-            var current = 0;
-            var inc = target / 50;
-            function step() {
+          counters.forEach(counter => {
+            const target = parseInt(counter.dataset.target, 10);
+            let current = 0;
+            const inc = target / 50;
+            const step = () => {
               current = Math.min(current + inc, target);
               counter.textContent = Math.floor(current);
               if (current < target) requestAnimationFrame(step);
               else counter.textContent = target;
-            }
+            };
             step();
           });
           obs.disconnect();
         }
       });
     }, { threshold: 0.3 });
-    var aboutSection = document.querySelector('.about');
+    const aboutSection = document.querySelector('.about');
     if (aboutSection) obs.observe(aboutSection);
   }
-  
-  // SCROLL REVEAL
-  var revealEls = document.querySelectorAll('[data-reveal]');
+
+  /* ---------------- SCROLL REVEAL ---------------- */
+  const revealEls = document.querySelectorAll('[data-reveal]');
   if (revealEls.length) {
-    var revealObs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry, idx) {
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach((entry, idx) => {
         if (entry.isIntersecting) {
-          setTimeout(function() {
-            entry.target.classList.add('is-visible');
-          }, idx % 6 * 70);
+          setTimeout(() => entry.target.classList.add('is-visible'), idx % 6 * 70);
           revealObs.unobserve(entry.target);
         }
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-    revealEls.forEach(function(el) { revealObs.observe(el); });
+    revealEls.forEach(el => revealObs.observe(el));
   }
+
+  /* ---------------- CUSTOM CURSOR ---------------- */
+  const dot = document.querySelector('.cursor-dot');
+  const ring = document.querySelector('.cursor-ring');
+  if (window.matchMedia('(hover: hover)').matches && dot && ring) {
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    window.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top = my + 'px'; });
+    (function loop() {
+      rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(loop);
+    })();
+    document.querySelectorAll('a, button, .svc-card, .tr-card, .stat-card').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('is-active'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('is-active'));
+    });
+  }
+
+  /* ---------------- MAGNETIC BUTTONS ---------------- */
+  document.querySelectorAll('.btn-magnetic').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const r = btn.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width / 2;
+      const y = e.clientY - r.top - r.height / 2;
+      btn.style.transform = `translate(${x * 0.18}px, ${y * 0.35}px)`;
+    });
+    btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0,0)'; });
+  });
 });
 </script>
 </body>
