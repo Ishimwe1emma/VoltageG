@@ -14,7 +14,7 @@
 
 <style>
 /* ======================================================================
-   0. RESET + TOKENS
+   RESET + TOKENS
 ====================================================================== */
 *,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
 
@@ -24,23 +24,21 @@
   --surface:    #14171D;
   --surface-2:  #1B1F27;
   --line:       rgba(255,255,255,0.09);
-  --line-soft:  rgba(255,255,255,0.05);
   --paper:      #F7F6F2;
-  --paper-dim:  #EEECE5;
   --text-0:     #F4F4F2;
   --text-1:     #A7ACB6;
   --text-2:     #6E737D;
   --ink-text-0: #14161A;
   --ink-text-1: #565B63;
-  --ink-text-2: #8A8F97;
-  --copper:        #FF6A33;
-  --copper-soft:   #FFB088;
-  --copper-dim:    rgba(255,106,51,0.14);
-  --current:       #3FE0E8;
-  --r-xs: 6px; --r-sm: 12px; --r-md: 18px; --r-lg: 26px; --r-pill: 999px;
-  --ease: cubic-bezier(.16,.84,.32,1);
+  --copper:     #FF6A33;
+  --copper-soft:#FFB088;
+  --copper-dim: rgba(255,106,51,0.14);
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-pill: 999px;
   --ease-soft: cubic-bezier(.4,0,.2,1);
-  --dur-s: .25s; --dur-m: .5s; --dur-l: .9s;
+  --dur-s: .25s;
+  --dur-m: .5s;
   --nav-h: 84px;
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
@@ -55,7 +53,7 @@ body{
   line-height:1.65;
   overflow-x:hidden;
   opacity:0;
-  transition:opacity .6s var(--ease);
+  transition:opacity .6s ease;
 }
 body.is-ready{ opacity:1; }
 img{ max-width:100%; height:auto; display:block; }
@@ -65,30 +63,21 @@ button{ font-family:inherit; }
 
 ::selection{ background:var(--copper); color:#fff; }
 
-@media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
-}
-
 .skip-link{
   position:absolute; left:-999px; top:0; z-index:2000;
   background:var(--copper); color:#fff; padding:12px 20px; font-weight:600; border-radius:0 0 var(--r-sm) 0;
 }
 .skip-link:focus{ left:0; }
 
-:focus-visible{ outline:2px solid var(--copper); outline-offset:3px; border-radius:4px; }
-
 /* ======================================================================
    LAYOUT UTILITIES
 ====================================================================== */
 .container{ max-width:1280px; margin:0 auto; padding:0 40px; position:relative; }
-@media (max-width:1024px){ .container{ padding:0 32px; } }
 @media (max-width:768px){ .container{ padding:0 24px; } }
 @media (max-width:480px){ .container{ padding:0 18px; } }
 
-.section{ padding:128px 0; position:relative; }
-@media (max-width:1024px){ .section{ padding:96px 0; } }
-@media (max-width:768px){ .section{ padding:72px 0; } }
-@media (max-width:480px){ .section{ padding:56px 0; } }
+.section{ padding:100px 0; position:relative; }
+@media (max-width:768px){ .section{ padding:70px 0; } }
 
 .eyebrow{
   display:inline-flex; align-items:center; gap:10px;
@@ -113,7 +102,7 @@ button{ font-family:inherit; }
 
 .lede{ font-size:1.08rem; color:var(--ink-text-1); max-width:540px; }
 
-.section-head{ max-width:680px; margin-bottom:64px; }
+.section-head{ max-width:680px; margin-bottom:56px; }
 .section-head.center{ margin-inline:auto; text-align:center; }
 .section-head.center .eyebrow{ justify-content:center; }
 
@@ -124,10 +113,9 @@ button{ font-family:inherit; }
   display:inline-flex; align-items:center; justify-content:center; gap:10px;
   font-family:var(--font-body); font-weight:600; font-size:.94rem;
   padding:15px 30px; border-radius:var(--r-pill); border:none; cursor:pointer;
-  position:relative; white-space:nowrap; transition:transform var(--dur-s) var(--ease-soft), box-shadow var(--dur-s) var(--ease-soft), background var(--dur-s);
-  will-change:transform;
+  transition:transform var(--dur-s) var(--ease-soft), box-shadow var(--dur-s) var(--ease-soft);
 }
-.btn i{ font-size:.78em; transition:transform .3s var(--ease); }
+.btn i{ font-size:.78em; transition:transform .3s ease; }
 .btn:hover i{ transform:translateX(3px); }
 
 .btn-copper{
@@ -169,11 +157,11 @@ button{ font-family:inherit; }
 }
 
 /* ======================================================================
-   NAVIGATION - FIXED
+   NAVIGATION
 ====================================================================== */
 .navbar{
   position:fixed; top:0; left:0; right:0; z-index:800; height:var(--nav-h);
-  transition:background var(--dur-m) var(--ease-soft), height var(--dur-m), box-shadow var(--dur-m), border-color var(--dur-m);
+  transition:background var(--dur-m) var(--ease-soft), height var(--dur-m), box-shadow var(--dur-m);
   border-bottom:1px solid transparent;
 }
 .navbar.scrolled{
@@ -186,7 +174,6 @@ button{ font-family:inherit; }
   max-width:1400px; margin:0 auto; padding:0 40px; height:100%;
   display:flex; align-items:center; justify-content:space-between;
 }
-@media (max-width:1024px){ .nav-container{ padding:0 32px; } }
 @media (max-width:768px){ .nav-container{ padding:0 22px; } }
 
 .logo{ display:flex; align-items:center; gap:12px; flex-shrink:0; }
@@ -208,17 +195,17 @@ button{ font-family:inherit; }
 }
 .nav-link:hover, .nav-link.active{ color:#fff; }
 .nav-link:hover::after, .nav-link.active::after{ width:18px; }
-.nav-link .chev{ font-size:.55rem; opacity:.5; transition:transform .3s var(--ease); }
+.nav-link .chev{ font-size:.55rem; opacity:.5; transition:transform .3s ease; }
 
 .nav-cta{ margin-left:14px; }
 
-/* Mega dropdown - desktop */
+/* Desktop mega dropdown */
 .mega-dropdown{
   position:absolute; top:100%; left:50%; transform:translateX(-50%) translateY(10px);
   width:560px; background:rgba(16,19,26,.98); backdrop-filter:blur(22px);
   border:1px solid rgba(255,255,255,.07); border-radius:var(--r-md);
   padding:28px; opacity:0; visibility:hidden; pointer-events:none;
-  transition:opacity var(--dur-s) var(--ease-soft), transform var(--dur-s) var(--ease-soft), visibility var(--dur-s);
+  transition:opacity var(--dur-s) var(--ease-soft), transform var(--dur-s) var(--ease-soft);
   box-shadow:0 30px 80px -20px rgba(0,0,0,.7);
 }
 .nav-item:hover .mega-dropdown{ opacity:1; visibility:visible; pointer-events:auto; transform:translateX(-50%) translateY(0); }
@@ -228,12 +215,6 @@ button{ font-family:inherit; }
 .mega-col a:last-child{ border-bottom:none; }
 .mega-col a i{ color:var(--copper); font-size:.75rem; width:16px; }
 .mega-col a:hover{ color:#fff; padding-left:5px; }
-.mega-preview{ border-radius:var(--r-sm); overflow:hidden; position:relative; }
-.mega-preview img{ width:100%; height:100%; object-fit:cover; }
-.mega-preview::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,13,16,.1), rgba(11,13,16,.92)); }
-.mega-preview-text{ position:absolute; bottom:0; left:0; right:0; padding:18px; z-index:2; }
-.mega-preview-text h5{ font-family:var(--font-display); color:#fff; font-size:.98rem; margin-bottom:4px; }
-.mega-preview-text p{ color:var(--text-1); font-size:.76rem; }
 
 /* Mobile toggle */
 .menu-toggle{ display:none; background:none; border:none; cursor:pointer; padding:8px; z-index:1000; }
@@ -244,7 +225,7 @@ button{ font-family:inherit; }
 .menu-toggle.open .hamburger span:nth-child(3){ transform:translateY(-8px) rotate(-45deg); }
 
 /* ============================================================
-   MOBILE NAV - FIXED DROPDOWN (UPDATED)
+   MOBILE NAV - FIXED WITH HIGH CONTRAST
 ============================================================ */
 @media (max-width:900px){
   .menu-toggle{ display:flex; }
@@ -283,15 +264,15 @@ button{ font-family:inherit; }
   }
   .nav-link::after{ display:none; }
   .nav-link.active{ color:var(--copper); }
-  .nav-link .chev{ font-size:.7rem; transition:transform .3s var(--ease); }
+  .nav-link .chev{ font-size:.7rem; transition:transform .3s ease; }
   .nav-item.open .nav-link .chev{ transform:rotate(180deg); }
 
-  /* FIXED: Mobile dropdown - shows content when open */
+  /* MOBILE DROPDOWN - HIGH CONTRAST FIX */
   .mega-dropdown{
     position:static;
     transform:none;
     width:100%;
-    background:rgba(0,0,0,0.2);
+    background:rgba(0,0,0,0.25);
     border:none;
     border-radius:0;
     padding:0 0 0 12px;
@@ -318,40 +299,45 @@ button{ font-family:inherit; }
     padding:0;
   }
   
+  /* FIX: High contrast for headers */
   .mega-col h4{ 
-    font-size:.6rem; 
-    margin:10px 0 4px;
+    font-size:.7rem; 
+    margin:12px 0 6px;
     color:var(--copper);
-    opacity:.7;
+    opacity:1;
     letter-spacing:.1em;
     text-transform:uppercase;
     font-family:var(--font-mono);
   }
   
+  /* FIX: High contrast for links - FULL WHITE */
   .mega-col a{ 
     display:flex;
     align-items:center;
     gap:10px;
-    padding:10px 0; 
-    font-size:.88rem;
-    border-bottom:1px solid rgba(255,255,255,.04);
-    color:rgba(255,255,255,.7);
+    padding:12px 0;
+    font-size:.95rem;
+    font-weight:500;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    color:#fff;
+    transition:all var(--dur-s);
   }
   .mega-col a:last-child{ border-bottom:none; }
   .mega-col a i{ 
     color:var(--copper); 
-    font-size:.7rem; 
-    width:18px;
+    font-size:.85rem; 
+    width:20px;
   }
   .mega-col a:hover, .mega-col a:active{ 
-    color:#fff; 
-    padding-left:4px;
+    color:var(--copper); 
+    padding-left:6px;
   }
   .mega-preview{ display:none; }
 
+  /* Mobile email - white text */
   .mobile-email{ 
     padding:20px 0 10px; 
-    color:#fff; 
+    color:#fff;
     font-family:var(--font-mono); 
     font-size:.82rem; 
     display:flex; 
@@ -516,21 +502,21 @@ button{ font-family:inherit; }
 /* ======================================================================
    CTA
 ====================================================================== */
-.cta{ background:var(--ink); color:#fff; text-align:center; padding:120px 0; position:relative; overflow:hidden; }
+.cta{ background:var(--ink); color:#fff; text-align:center; padding:100px 0; position:relative; overflow:hidden; }
 .cta h2{ font-family:var(--font-display); font-weight:700; font-size:clamp(2rem,4.4vw,3.2rem); letter-spacing:-.02em; margin-bottom:18px; position:relative; z-index:2; }
 .cta p{ color:var(--text-1); font-size:1.08rem; max-width:520px; margin:0 auto 38px; position:relative; z-index:2; }
 .cta-buttons{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; position:relative; z-index:2; }
 
 @media (max-width:480px){
-  .cta{ padding:80px 0; }
+  .cta{ padding:70px 0; }
   .cta-buttons{ flex-direction:column; align-items:stretch; padding:0 20px; }
 }
 
 /* ======================================================================
    FOOTER
 ====================================================================== */
-.footer{ background:#080A0C; color:var(--text-1); padding:72px 0 30px; }
-.footer-grid{ display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:48px; padding-bottom:46px; border-bottom:1px solid rgba(255,255,255,.06); }
+.footer{ background:#080A0C; color:var(--text-1); padding:60px 0 30px; }
+.footer-grid{ display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:48px; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,.06); }
 .footer-brand .logo-word{ color:#fff; }
 .footer-brand p{ font-size:.92rem; max-width:300px; margin-top:18px; line-height:1.8; }
 .footer-col h4{ font-family:var(--font-mono); color:#fff; font-size:.72rem; text-transform:uppercase; letter-spacing:.12em; margin-bottom:18px; opacity:.9; }
@@ -540,7 +526,7 @@ button{ font-family:inherit; }
 .footer-bottom{ padding-top:26px; display:flex; justify-content:space-between; align-items:center; font-size:.82rem; font-family:var(--font-mono); }
 .footer-social{ display:flex; gap:12px; }
 .footer-social a{
-  width:36px; height:36px; border-radius:var(--r-xs); background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
+  width:36px; height:36px; border-radius:6px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
   display:flex; align-items:center; justify-content:center; color:var(--text-1); transition:all var(--dur-s);
 }
 .footer-social a:hover{ background:var(--copper); border-color:var(--copper); color:#fff; transform:translateY(-3px); }
@@ -849,7 +835,7 @@ button{ font-family:inherit; }
 </footer>
 
 <script>
-// SIMPLE DROPDOWN TOGGLE - WORKS ON MOBILE
+// DROPDOWN TOGGLE - WORKS ON MOBILE
 function toggleDropdown(button) {
   // Only run on mobile
   if (window.innerWidth > 900) return;
