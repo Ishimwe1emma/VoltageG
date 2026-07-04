@@ -213,7 +213,7 @@ button{ font-family:inherit; }
 }
 
 /* ======================================================================
-   6. NAVIGATION - FIXED MOBILE DROPDOWN
+   6. NAVIGATION
 ====================================================================== */
 .navbar{
   position:fixed; top:0; left:0; right:0; z-index:800; height:var(--nav-h);
@@ -257,7 +257,6 @@ button{ font-family:inherit; }
 
 .nav-cta{ margin-left:14px; }
 
-/* Mega dropdown - desktop */
 .mega-dropdown{
   position:absolute; top:100%; left:50%; transform:translateX(-50%) translateY(10px);
   width:560px; background:rgba(16,19,26,.98); backdrop-filter:blur(22px);
@@ -282,7 +281,6 @@ button{ font-family:inherit; }
 
 @media (max-width:1100px){ .mega-dropdown{ width:460px; } }
 
-/* Mobile toggle */
 .menu-toggle{ display:none; background:none; border:none; cursor:pointer; padding:8px; z-index:1000; }
 .hamburger{ width:26px; height:18px; display:flex; flex-direction:column; justify-content:space-between; }
 .hamburger span{ display:block; height:2px; background:#fff; border-radius:2px; transition:all var(--dur-s) var(--ease-soft); }
@@ -290,9 +288,6 @@ button{ font-family:inherit; }
 .menu-toggle.open .hamburger span:nth-child(2){ opacity:0; }
 .menu-toggle.open .hamburger span:nth-child(3){ transform:translateY(-8px) rotate(-45deg); }
 
-/* ============================================================
-   MOBILE NAV - FIXED DROPDOWN
-============================================================ */
 @media (max-width:900px){
   .menu-toggle{ display:flex; }
   .nav-cta{ display:none; }
@@ -332,7 +327,6 @@ button{ font-family:inherit; }
   .nav-link .chev{ font-size:.7rem; transition:transform .3s var(--ease); }
   .nav-item.open .nav-link .chev{ transform:rotate(180deg); }
 
-  /* FIXED: Mobile dropdown - no desktop hover transform on phones */
   .mega-dropdown,
   .nav-item:hover .mega-dropdown{
     position:static;
@@ -368,43 +362,12 @@ button{ font-family:inherit; }
     padding-left:12px;
   }
   
-  .mega-col{ 
-    padding:0;
-  }
-  
-  .mega-col h4{ 
-    font-size:.7rem; 
-    margin:12px 0 6px;
-    color:var(--copper);
-    opacity:1;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    font-family:var(--font-mono);
-  }
-  
-  .mega-col a{ 
-    display:flex;
-    align-items:center;
-    gap:12px;
-    width:100%;
-    padding:13px 0; 
-    font-size:.95rem;
-    font-weight:500;
-    border-bottom:1px solid rgba(255,255,255,.08);
-    color:#ffffff !important;
-    opacity:1 !important;
-    transform:none !important;
-  }
+  .mega-col{ padding:0; }
+  .mega-col h4{ font-size:.7rem; margin:12px 0 6px; color:var(--copper); opacity:1; letter-spacing:.14em; text-transform:uppercase; font-family:var(--font-mono); }
+  .mega-col a{ display:flex; align-items:center; gap:12px; width:100%; padding:13px 0; font-size:.95rem; font-weight:500; border-bottom:1px solid rgba(255,255,255,.08); color:#ffffff !important; opacity:1 !important; transform:none !important; }
   .mega-col a:last-child{ border-bottom:none; }
-  .mega-col a i{ 
-    color:var(--copper); 
-    font-size:.85rem; 
-    width:20px;
-  }
-  .mega-col a:hover{ 
-    color:#fff; 
-    padding-left:4px;
-  }
+  .mega-col a i{ color:var(--copper); font-size:.85rem; width:20px; }
+  .mega-col a:hover{ color:#fff; padding-left:4px; }
   .mega-preview{ display:none; }
 
   .mobile-email{ 
@@ -495,71 +458,373 @@ button{ font-family:inherit; }
 @media (min-width:1180px){ .hero-meter{ display:block; } }
 
 /* ======================================================================
-   8. ABOUT
+   8. WHO WE ARE
 ====================================================================== */
-.about{ background:var(--paper); }
-.about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; }
-.about-col p{ color:var(--ink-text-1); font-size:1.02rem; margin-bottom:18px; }
-.spec-note{
-  margin-top:26px; padding:22px 26px; border-radius:var(--r-sm);
-  background:#fff; border:1px solid rgba(20,22,26,.08); position:relative;
-}
-.spec-note::before{ content:''; position:absolute; left:0; top:14px; bottom:14px; width:3px; background:var(--copper); border-radius:2px; }
-.spec-note p{ margin:0; color:var(--ink-text-0); font-weight:500; font-size:.96rem; padding-left:6px; }
+.who-we-are{ background:var(--paper); padding:100px 0; }
+.who-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
 
-.stat-row{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:30px; }
-.stat-card{
+.who-text .heading-md{ margin-bottom:16px; }
+.who-text .heading-md em{ color:var(--copper); font-style:normal; }
+.who-text p{ color:var(--ink-text-1); font-size:1.02rem; line-height:1.8; margin-bottom:16px; }
+.who-spec{
+  margin-top:24px; padding:20px 26px; border-radius:var(--r-sm);
+  background:#fff; border:1px solid rgba(20,22,26,.08); position:relative;
+  border-left:4px solid var(--copper);
+}
+.who-spec p{ margin:0; color:var(--ink-text-0); font-weight:500; font-size:.95rem; }
+
+.who-image{
+  position:relative;
+  border-radius:0 0 0 100px;
+  overflow:hidden;
+  box-shadow:0 20px 48px -16px rgba(20,22,26,.15);
+  min-height:400px;
+}
+.who-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  position:absolute;
+  top:0;
+  left:0;
+  transition:transform .6s var(--ease-soft);
+}
+.who-image:hover img{ transform:scale(1.03); }
+
+@media (max-width:900px){
+  .who-grid{ grid-template-columns:1fr; gap:40px; }
+  .who-image{ min-height:280px; border-radius:0 0 0 60px; }
+}
+@media (max-width:768px){ .who-we-are{ padding:60px 0; } }
+
+/* ======================================================================
+   9. MISSION
+====================================================================== */
+.mission-section{ background:var(--paper-dim); padding:100px 0; }
+.mission-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+.mission-grid .mission-text{ order:2; }
+.mission-grid .mission-image{ order:1; }
+
+.mission-text .heading-md{ margin-bottom:16px; }
+.mission-text .heading-md em{ color:var(--copper); font-style:normal; }
+.mission-text p{ color:var(--ink-text-1); font-size:1.02rem; line-height:1.8; margin-bottom:16px; }
+
+.mission-stats{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:28px; }
+.mission-stat{
   position:relative; padding:26px 22px; border-radius:var(--r-sm); background:#fff;
   border:1px solid rgba(20,22,26,.08); transition:transform var(--dur-s) var(--ease-soft), box-shadow var(--dur-s);
 }
-.stat-card::before, .stat-card::after{ content:''; position:absolute; width:11px; height:11px; border-color:var(--copper); opacity:0; transition:opacity var(--dur-s); }
-.stat-card::before{ top:8px; left:8px; border-top:2px solid; border-left:2px solid; }
-.stat-card::after{ bottom:8px; right:8px; border-bottom:2px solid; border-right:2px solid; }
-.stat-card:hover{ transform:translateY(-5px); box-shadow:0 20px 40px -16px rgba(20,22,26,.18); }
-.stat-card:hover::before, .stat-card:hover::after{ opacity:1; }
-.stat-card h3{ font-family:var(--font-mono); font-weight:600; font-size:2.1rem; color:var(--copper); }
-.stat-card p{ font-size:.82rem; color:var(--ink-text-1); margin-top:4px; }
-
-@media (max-width:768px){
-  .about-grid{ grid-template-columns:1fr; gap:42px; }
+.mission-stat::before, .mission-stat::after{
+  content:''; position:absolute; width:11px; height:11px; border-color:var(--copper); opacity:0; transition:opacity var(--dur-s);
 }
+.mission-stat::before{ top:8px; left:8px; border-top:2px solid; border-left:2px solid; }
+.mission-stat::after{ bottom:8px; right:8px; border-bottom:2px solid; border-right:2px solid; }
+.mission-stat:hover{ transform:translateY(-5px); box-shadow:0 20px 40px -16px rgba(20,22,26,.18); }
+.mission-stat:hover::before, .mission-stat:hover::after{ opacity:1; }
+.mission-stat h3{ font-family:var(--font-mono); font-weight:600; font-size:2.1rem; color:var(--copper); }
+.mission-stat p{ font-size:.82rem; color:var(--ink-text-1); margin-top:4px; }
+
+.mission-image{
+  position:relative;
+  border-radius:0 0 100px 0;
+  overflow:hidden;
+  box-shadow:0 20px 48px -16px rgba(20,22,26,.15);
+  min-height:400px;
+}
+.mission-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  position:absolute;
+  top:0;
+  left:0;
+  transition:transform .6s var(--ease-soft);
+}
+.mission-image:hover img{ transform:scale(1.03); }
+
+@media (max-width:900px){
+  .mission-grid{ grid-template-columns:1fr; gap:40px; }
+  .mission-grid .mission-text{ order:1; }
+  .mission-grid .mission-image{ order:2; }
+  .mission-image{ min-height:260px; border-radius:0 0 60px 0; }
+}
+@media (max-width:768px){ .mission-section{ padding:60px 0; } }
 
 /* ======================================================================
-   9. SERVICES
+   10. SERVICES - IMPROVED PROFESSIONAL DESIGN
 ====================================================================== */
-.services{ background:var(--ink); color:#fff; }
-.services .lede{ color:var(--text-1); }
-.services-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(330px,1fr)); gap:28px; }
-
-.svc-card{
-  position:relative; background:var(--surface); border:1px solid var(--line);
-  border-radius:var(--r-md); padding:38px 32px; transition:transform var(--dur-m) var(--ease-soft), border-color var(--dur-m), background var(--dur-m);
+.services{ 
+  background:var(--ink); 
+  color:#fff; 
+  position:relative;
   overflow:hidden;
 }
-.svc-card::before, .svc-card::after{ content:''; position:absolute; width:14px; height:14px; border-color:var(--copper); opacity:0; transition:opacity var(--dur-m); }
-.svc-card::before{ top:12px; left:12px; border-top:2px solid; border-left:2px solid; }
-.svc-card::after{ bottom:12px; right:12px; border-bottom:2px solid; border-right:2px solid; }
-.svc-card:hover{ transform:translateY(-6px); border-color:rgba(255,106,51,.35); background:var(--surface-2); }
-.svc-card:hover::before, .svc-card:hover::after{ opacity:1; }
-
-.svc-index{ font-family:var(--font-mono); color:var(--text-2); font-size:.78rem; letter-spacing:.08em; margin-bottom:18px; display:block; }
-.svc-icon{
-  width:54px; height:54px; border-radius:var(--r-sm); margin-bottom:22px;
-  display:flex; align-items:center; justify-content:center; font-size:1.35rem; color:var(--copper);
-  background:var(--copper-dim); border:1px solid rgba(255,106,51,.22);
+.services::before{
+  content:'';
+  position:absolute;
+  top:-20%;
+  right:-15%;
+  width:50%;
+  height:140%;
+  background:radial-gradient(ellipse, rgba(255,106,51,0.04) 0%, transparent 70%);
+  pointer-events:none;
 }
-.svc-card h3{ font-family:var(--font-display); font-size:1.28rem; font-weight:600; margin-bottom:18px; color:#fff; }
-.svc-card ul{ display:flex; flex-direction:column; gap:11px; }
-.svc-card ul li{ display:flex; gap:11px; align-items:flex-start; font-size:.92rem; color:var(--text-1); line-height:1.55; }
-.svc-card ul li i{ color:var(--copper); font-size:.62rem; margin-top:6px; flex-shrink:0; }
+.services .lede{ color:var(--text-1); }
+
+/* Section Header Enhancement */
+.services .section-head.center .eyebrow{
+  justify-content:center;
+  background:rgba(255,106,51,0.08);
+  padding:6px 18px;
+  border-radius:var(--r-pill);
+  border:1px solid rgba(255,106,51,0.15);
+  backdrop-filter:blur(4px);
+}
+.services .section-head.center .eyebrow .num{
+  color:var(--copper);
+  opacity:1;
+}
+.services .section-head.center .heading-xl{
+  background:linear-gradient(180deg, #fff 40%, rgba(255,255,255,0.6));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.services .section-head.center .heading-xl em{
+  -webkit-text-fill-color:var(--copper);
+  background:linear-gradient(180deg, var(--copper), var(--copper-soft));
+  -webkit-background-clip:text;
+  background-clip:text;
+}
+.services .section-head.center .lede{
+  color:var(--text-1);
+  font-size:1.1rem;
+  line-height:1.7;
+  max-width:580px;
+  margin-inline:auto;
+  border-top:1px solid rgba(255,255,255,0.05);
+  padding-top:20px;
+}
+
+/* Service Cards - Modern Glassmorphism */
+.services-grid{ 
+  display:grid; 
+  grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); 
+  gap:30px; 
+  margin-top:16px;
+}
+
+.svc-card{
+  position:relative; 
+  background:rgba(20,23,29,0.6);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:var(--r-lg); 
+  padding:40px 34px; 
+  transition:all var(--dur-m) var(--ease-soft);
+  overflow:hidden;
+}
+.svc-card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:2px;
+  background:linear-gradient(90deg, transparent, var(--copper), transparent);
+  opacity:0;
+  transition:opacity var(--dur-m) var(--ease-soft);
+}
+.svc-card::after{ 
+  content:''; 
+  position:absolute; 
+  inset:0;
+  background:radial-gradient(circle at 30% 20%, rgba(255,106,51,0.03), transparent 60%);
+  pointer-events:none;
+  opacity:0;
+  transition:opacity var(--dur-m);
+}
+.svc-card:hover{ 
+  transform:translateY(-8px); 
+  border-color:rgba(255,106,51,0.3); 
+  background:rgba(25,28,35,0.8);
+  box-shadow:0 30px 60px -20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,106,51,0.1);
+}
+.svc-card:hover::before{ opacity:1; }
+.svc-card:hover::after{ opacity:1; }
+
+/* Corner accents */
+.svc-card .corner-accent{
+  position:absolute;
+  width:20px;
+  height:20px;
+  border-color:var(--copper);
+  opacity:0;
+  transition:opacity var(--dur-m) var(--ease-soft);
+}
+.svc-card .corner-accent.tl{
+  top:14px;
+  left:14px;
+  border-top:2px solid;
+  border-left:2px solid;
+}
+.svc-card .corner-accent.br{
+  bottom:14px;
+  right:14px;
+  border-bottom:2px solid;
+  border-right:2px solid;
+}
+.svc-card:hover .corner-accent{ opacity:0.6; }
+
+.svc-index{ 
+  font-family:var(--font-mono); 
+  color:var(--copper); 
+  font-size:.7rem; 
+  font-weight:500;
+  letter-spacing:.12em; 
+  margin-bottom:16px; 
+  display:inline-block;
+  background:rgba(255,106,51,0.1);
+  padding:4px 14px;
+  border-radius:var(--r-pill);
+  border:1px solid rgba(255,106,51,0.12);
+}
+.svc-index .slash{
+  color:rgba(255,255,255,0.2);
+  margin:0 4px;
+}
+
+.svc-icon{
+  width:60px; 
+  height:60px; 
+  border-radius:var(--r-md); 
+  margin-bottom:22px;
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  font-size:1.5rem; 
+  color:var(--copper);
+  background:rgba(255,106,51,0.08); 
+  border:1px solid rgba(255,106,51,0.12);
+  transition:all var(--dur-m) var(--ease-soft);
+  position:relative;
+}
+.svc-icon::after{
+  content:'';
+  position:absolute;
+  inset:-2px;
+  border-radius:var(--r-md);
+  background:linear-gradient(135deg, rgba(255,106,51,0.2), transparent);
+  opacity:0;
+  transition:opacity var(--dur-m);
+}
+.svc-card:hover .svc-icon{
+  transform:scale(1.05);
+  background:rgba(255,106,51,0.15);
+  border-color:rgba(255,106,51,0.3);
+}
+.svc-card:hover .svc-icon::after{ opacity:1; }
+
+.svc-card h3{ 
+  font-family:var(--font-display); 
+  font-size:1.3rem; 
+  font-weight:600; 
+  margin-bottom:16px; 
+  color:#fff;
+  letter-spacing:-0.01em;
+}
+.svc-card h3 .highlight{
+  color:var(--copper);
+}
+
+.svc-card ul{ 
+  display:flex; 
+  flex-direction:column; 
+  gap:10px; 
+}
+.svc-card ul li{ 
+  display:flex; 
+  gap:12px; 
+  align-items:flex-start; 
+  font-size:.92rem; 
+  color:var(--text-1); 
+  line-height:1.55;
+  padding:6px 0;
+  border-bottom:1px solid rgba(255,255,255,0.03);
+  transition:all var(--dur-s) var(--ease-soft);
+}
+.svc-card ul li:last-child{ border-bottom:none; }
+.svc-card ul li:hover{
+  color:var(--text-0);
+  padding-left:4px;
+}
+.svc-card ul li i{ 
+  color:var(--copper); 
+  font-size:.55rem; 
+  margin-top:7px; 
+  flex-shrink:0;
+  transition:transform var(--dur-s) var(--ease-soft);
+}
+.svc-card ul li:hover i{
+  transform:scale(1.3);
+}
+
+/* Card number badge */
+.svc-card .card-number{
+  position:absolute;
+  top:20px;
+  right:24px;
+  font-family:var(--font-mono);
+  font-size:4.5rem;
+  font-weight:700;
+  color:rgba(255,255,255,0.03);
+  line-height:1;
+  pointer-events:none;
+  user-select:none;
+  letter-spacing:-0.05em;
+  transition:all var(--dur-m) var(--ease-soft);
+}
+.svc-card:hover .card-number{
+  color:rgba(255,106,51,0.05);
+  transform:scale(1.05);
+}
+
+/* Learn more link */
+.svc-card .learn-more{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:20px;
+  font-family:var(--font-mono);
+  font-size:.75rem;
+  font-weight:500;
+  color:var(--copper);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  transition:all var(--dur-s) var(--ease-soft);
+  text-decoration:none;
+  border-bottom:1px solid transparent;
+}
+.svc-card .learn-more i{
+  font-size:.65rem;
+  transition:transform var(--dur-s) var(--ease-soft);
+}
+.svc-card .learn-more:hover{
+  color:var(--copper-soft);
+  border-bottom-color:rgba(255,106,51,0.3);
+}
+.svc-card .learn-more:hover i{
+  transform:translateX(4px);
+}
 
 @media (max-width:768px){
   .services-grid{ grid-template-columns:1fr; }
-  .svc-card{ padding:30px 26px; }
+  .svc-card{ padding:32px 26px; }
+  .svc-card .card-number{ font-size:3.5rem; top:16px; right:18px; }
 }
 
 /* ======================================================================
-   10. TRAINING
+   11. TRAINING
 ====================================================================== */
 .training{ background:var(--paper); }
 .training-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:24px; }
@@ -582,7 +847,7 @@ button{ font-family:inherit; }
 @media (max-width:480px){ .training-grid{ grid-template-columns:1fr; } }
 
 /* ======================================================================
-   11. CTA
+   12. CTA
 ====================================================================== */
 .cta{ background:var(--ink); color:#fff; text-align:center; padding:120px 0; position:relative; overflow:hidden; }
 .cta-trace{ position:absolute; inset:0; opacity:.35; pointer-events:none; }
@@ -596,7 +861,7 @@ button{ font-family:inherit; }
 }
 
 /* ======================================================================
-   12. FOOTER
+   13. FOOTER
 ====================================================================== */
 .footer{ background:#080A0C; color:var(--text-1); padding:72px 0 30px; }
 .footer-grid{ display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:48px; padding-bottom:46px; border-bottom:1px solid rgba(255,255,255,.06); }
@@ -619,12 +884,21 @@ button{ font-family:inherit; }
 @media (max-width:480px){ .footer-grid{ grid-template-columns:1fr; gap:30px; } }
 
 /* ======================================================================
-   13. SCROLL REVEAL
+   14. SCROLL REVEAL
 ====================================================================== */
 [data-reveal]{ opacity:0; transform:translateY(28px); transition:opacity .8s var(--ease-soft), transform .8s var(--ease-soft); }
 [data-reveal].is-visible{ opacity:1; transform:translateY(0); }
 [data-reveal="zoom"]{ transform:translateY(0) scale(.94); }
 [data-reveal="zoom"].is-visible{ transform:scale(1); }
+
+[data-reveal="left"]{ opacity:0; transform:translateX(-60px); transition:opacity .9s var(--ease-soft), transform .9s var(--ease-soft); }
+[data-reveal="left"].is-visible{ opacity:1; transform:translateX(0); }
+
+[data-reveal="right"]{ opacity:0; transform:translateX(60px); transition:opacity .9s var(--ease-soft), transform .9s var(--ease-soft); }
+[data-reveal="right"].is-visible{ opacity:1; transform:translateX(0); }
+
+[data-reveal="up"]{ opacity:0; transform:translateY(50px); transition:opacity .9s var(--ease-soft), transform .9s var(--ease-soft); }
+[data-reveal="up"].is-visible{ opacity:1; transform:translateY(0); }
 </style>
 </head>
 
@@ -714,13 +988,11 @@ button{ font-family:inherit; }
 
       <li class="nav-item" role="none"><a href="contact.html" class="nav-link" role="menuitem">Contact</a></li>
 
-      <!-- Mobile Email -->
       <li class="nav-item" style="border-bottom:none; padding-top:8px; margin-top:4px;">
         <div class="mobile-email"><i class="fas fa-envelope"></i> info@voltedgegroup.com</div>
       </li>
     </ul>
 
-    <!-- Desktop CTA -->
     <div class="nav-cta">
       <a href="contact.html" class="btn btn-copper btn-sm btn-magnetic">Free consultation</a>
     </div>
@@ -778,27 +1050,42 @@ button{ font-family:inherit; }
 </section>
 
 <!-- ============================================================
-     ABOUT
+     WHO WE ARE
 ============================================================ -->
-<section class="about section" id="about">
+<section class="who-we-are" id="who-we-are">
   <div class="container">
-    <div class="about-grid">
-      <div class="about-col" data-reveal>
+    <div class="who-grid">
+      <div class="who-text" data-reveal="left">
         <span class="eyebrow"><span class="num">FIG. 01</span><span class="tick"></span>WHO WE ARE</span>
-        <h2 class="heading-md">Engineering, built to run for decades — not just switch on.</h2>
+        <h2 class="heading-md">Engineering, built to run for decades — <em>not just switch on.</em></h2>
         <p>We are a professional engineering company providing comprehensive services in electrical engineering, civil and building construction, and engineering technology. Our expertise extends to power generation systems — from design and installation through operation and maintenance.</p>
         <p>We also deliver specialised training for power plant operators and engineers, equipping clients with the skills required for safe, efficient and sustainable operations across residential, commercial and industrial sectors.</p>
-        <div class="spec-note"><p>Delivering integrated, innovative and cost-effective solutions — built to spec, run to schedule.</p></div>
+        <div class="who-spec"><p>Delivering integrated, innovative and cost-effective solutions — built to spec, run to schedule.</p></div>
       </div>
+      <div class="who-image" data-reveal="right">
+        <img src="https://images.pexels.com/photos/12274476/pexels-photo-12274476.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Engineers at work on electrical infrastructure" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
 
-      <div class="about-col" data-reveal>
+<!-- ============================================================
+     MISSION
+============================================================ -->
+<section class="mission-section" id="mission">
+  <div class="container">
+    <div class="mission-grid">
+      <div class="mission-image" data-reveal="left">
+        <img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Engineering team collaboration" loading="lazy">
+      </div>
+      <div class="mission-text" data-reveal="right">
         <span class="eyebrow"><span class="num">FIG. 02</span><span class="tick"></span>OUR MISSION</span>
-        <h2 class="heading-md">The premier engineering partner in Africa.</h2>
+        <h2 class="heading-md">The premier engineering <em>partner in Africa.</em></h2>
         <p>We're committed to becoming the region's most trusted name in electrical engineering, power generation and technical training — leading with innovation, safety and sustainability on every project we undertake.</p>
 
-        <div class="stat-row">
-          <div class="stat-card"><h3><span class="counter" data-target="450">0</span>+</h3><p>Projects delivered</p></div>
-          <div class="stat-card"><h3><span class="counter" data-target="52">0</span> MW</h3><p>Power capacity</p></div>
+        <div class="mission-stats">
+          <div class="mission-stat"><h3><span class="counter" data-target="450">0</span>+</h3><p>Projects delivered</p></div>
+          <div class="mission-stat"><h3><span class="counter" data-target="52">0</span> MW</h3><p>Power capacity</p></div>
         </div>
       </div>
     </div>
@@ -806,7 +1093,7 @@ button{ font-family:inherit; }
 </section>
 
 <!-- ============================================================
-     SERVICES
+     SERVICES - IMPROVED PROFESSIONAL DESIGN
 ============================================================ -->
 <section class="services section" id="services">
   <div class="container">
@@ -818,9 +1105,12 @@ button{ font-family:inherit; }
 
     <div class="services-grid">
       <div class="svc-card" data-reveal>
-        <span class="svc-index">01 / SYSTEMS</span>
+        <span class="card-number">01</span>
+        <span class="corner-accent tl"></span>
+        <span class="corner-accent br"></span>
+        <span class="svc-index"><span class="slash">//</span> SYSTEMS</span>
         <div class="svc-icon"><i class="fas fa-bolt"></i></div>
-        <h3>Electrical Engineering Services</h3>
+        <h3>Electrical <span class="highlight">Engineering</span> Services</h3>
         <ul>
           <li><i class="fas fa-circle"></i>Electrical system design, installation and maintenance</li>
           <li><i class="fas fa-circle"></i>Power generation systems — diesel, hydro, solar, hybrid</li>
@@ -830,12 +1120,16 @@ button{ font-family:inherit; }
           <li><i class="fas fa-circle"></i>Substation design and power distribution networks</li>
           <li><i class="fas fa-circle"></i>Backup power — generators, UPS, inverters</li>
         </ul>
+        <a href="solutions-power.html" class="learn-more">Explore solutions <i class="fas fa-arrow-right"></i></a>
       </div>
 
       <div class="svc-card" data-reveal>
-        <span class="svc-index">02 / PLANTS</span>
+        <span class="card-number">02</span>
+        <span class="corner-accent tl"></span>
+        <span class="corner-accent br"></span>
+        <span class="svc-index"><span class="slash">//</span> PLANTS</span>
         <div class="svc-icon"><i class="fas fa-charging-station"></i></div>
-        <h3>Power Plant Services</h3>
+        <h3>Power <span class="highlight">Plant</span> Services</h3>
         <ul>
           <li><i class="fas fa-circle"></i>Complete power plant EPC solutions</li>
           <li><i class="fas fa-circle"></i>Diesel &amp; HFO power plants</li>
@@ -845,6 +1139,7 @@ button{ font-family:inherit; }
           <li><i class="fas fa-circle"></i>Performance optimisation &amp; efficiency upgrades</li>
           <li><i class="fas fa-circle"></i>24/7 operations &amp; maintenance support</li>
         </ul>
+        <a href="solutions-power.html" class="learn-more">Explore solutions <i class="fas fa-arrow-right"></i></a>
       </div>
     </div>
   </div>
@@ -965,7 +1260,6 @@ document.addEventListener('DOMContentLoaded', function () {
     lastScroll = cur;
   }, { passive: true });
 
-  // Mobile menu toggle
   menuToggle.addEventListener('click', function () {
     const isOpen = navMenu.classList.toggle('active');
     this.classList.toggle('open');
@@ -976,17 +1270,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Mobile dropdown toggle - FIXED
   document.querySelectorAll('.nav-item .nav-link[aria-haspopup="true"]').forEach(btn => {
     btn.addEventListener('click', function (e) {
-      // Only for mobile
       if (window.innerWidth <= 900) {
         e.preventDefault();
         e.stopPropagation();
         const parent = this.closest('.nav-item');
         const wasOpen = parent.classList.contains('open');
-        
-        // Close other open dropdowns
         document.querySelectorAll('.nav-item.open').forEach(el => {
           if (el !== parent) {
             el.classList.remove('open');
@@ -994,15 +1284,12 @@ document.addEventListener('DOMContentLoaded', function () {
             if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
           }
         });
-        
-        // Toggle this one
         parent.classList.toggle('open', !wasOpen);
         this.setAttribute('aria-expanded', String(!wasOpen));
       }
     });
   });
 
-  // Close menu when clicking a link
   navMenu.querySelectorAll('a:not([href="#"])').forEach(link => {
     link.addEventListener('click', function () {
       if (window.innerWidth <= 900) {
@@ -1015,7 +1302,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Close on escape key
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && navMenu.classList.contains('active')) {
       navMenu.classList.remove('active');
@@ -1093,8 +1379,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
     }, { threshold: 0.3 });
-    const aboutSection = document.querySelector('.about');
-    if (aboutSection) obs.observe(aboutSection);
+    const missionSection = document.querySelector('.mission-section');
+    if (missionSection) obs.observe(missionSection);
   }
 
   /* ---------------- SCROLL REVEAL ---------------- */
@@ -1122,7 +1408,7 @@ document.addEventListener('DOMContentLoaded', function () {
       ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
       requestAnimationFrame(loop);
     })();
-    document.querySelectorAll('a, button, .svc-card, .tr-card, .stat-card').forEach(el => {
+    document.querySelectorAll('a, button, .svc-card, .tr-card, .mission-stat').forEach(el => {
       el.addEventListener('mouseenter', () => ring.classList.add('is-active'));
       el.addEventListener('mouseleave', () => ring.classList.remove('is-active'));
     });
